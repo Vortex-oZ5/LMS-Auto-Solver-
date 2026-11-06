@@ -7,7 +7,7 @@
 
 <p align="center">
   <img alt="Version" src="https://img.shields.io/badge/version-6.5-blue?style=for-the-badge">
-  <img alt="Platform" src="https://img.shields.io/badge/platform-Tampermonkey-00485B?style=for-the-badge&logo=tampermonkey&logoColor=white">
+  <img alt="Platform" src="https://img.shields.io/badge/platform-Violentmonkey-E54A4A?style=for-the-badge">
   <img alt="AI Model" src="https://img.shields.io/badge/AI-Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white">
   <img alt="Language" src="https://img.shields.io/badge/solves-Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-lightgrey?style=for-the-badge">
@@ -17,7 +17,7 @@
 
 ## Overview
 
-**Vortex Auto-Pilot** is a Tampermonkey userscript that fully automates solving Moodle coding questions using the Google Gemini API. It detects the problem, generates a Java solution, injects it into the editor, clicks **Check**, repairs failures automatically, advances through the quiz, and submits the attempt.
+**Vortex Auto-Pilot** is a Violentmonkey userscript that fully automates solving Moodle coding questions using the Google Gemini API. It detects the problem, generates a Java solution, injects it into the editor, clicks **Check**, repairs failures automatically, advances through the quiz, and submits the attempt.
 
 The script exposes a floating debug panel (**`Alt + X`**) with live logs and settings.
 
@@ -58,8 +58,8 @@ The script exposes a floating debug panel (**`Alt + X`**) with live logs and set
 
 | Requirement | Notes |
 |---|---|
-| Modern browser | Chrome, Edge, Firefox, Brave, Opera, or Safari |
-| **Tampermonkey** extension | Required to execute the userscript |
+| Modern browser | Chrome, Edge, Firefox, Brave, Opera, or Chromium-based browsers |
+| **Violentmonkey** extension | Required to execute the userscript |
 | Internet connection | Needed for Gemini API calls |
 | **Google Gemini API key** | Free tier available — see [API Key Setup](#-api-key-setup) |
 | Access to the LMS | Script matches `*://*/*`; designed for Moodle |
@@ -68,34 +68,48 @@ The script exposes a floating debug panel (**`Alt + X`**) with live logs and set
 
 ## Installation
 
-### Step 1 — Install Tampermonkey
+### Step 1 — Install Violentmonkey
 
 | Browser | Source |
 |---|---|
-| Chrome / Edge / Brave / Opera | [Chrome Web Store](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) |
-| Firefox | [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/tampermonkey/) |
-| Safari | [App Store](https://apps.apple.com/app/tampermonkey/id1482490089) |
+| Chrome | [Chrome Web Store — Violentmonkey](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag) |
+| Edge | [Edge Add-ons — Violentmonkey](https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao) |
+| Firefox | [Firefox Add-ons — Violentmonkey](https://addons.mozilla.org/firefox/addon/violentmonkey/) |
+| Opera | [Opera Add-ons — Violentmonkey](https://addons.opera.com/extensions/details/violent-monkey/) |
+| Other / manual | [violentmonkey.github.io](https://violentmonkey.github.io/get-it/) |
 
-After installing, pin the Tampermonkey icon to your toolbar.
+After installing, pin the **Violentmonkey** icon to your toolbar.
+
+> Violentmonkey is open-source, has no analytics, and does not require a "Developer mode" toggle — one of its key advantages over other userscript managers.
 
 ### Step 2 — Create a New Userscript
 
-1. Click the **Tampermonkey** toolbar icon.
-2. Select **Create a new script…** (or **Dashboard → `+`**).
-3. Clear the default boilerplate.
+1. Click the **Violentmonkey** toolbar icon.
+2. In the popup, click the **“+” (Create a new script)** button at the top.
+   - Alternative route: **Violentmonkey Dashboard → “+”** in the header.
+3. A new editor tab opens with a small `// ==UserScript==` boilerplate.
 
 ### Step 3 — Paste the Script
 
 1. Open `coding.js`.
 2. Select everything and copy (`Ctrl + C` / `Cmd + C`).
-3. Paste into the Tampermonkey editor.
+3. In the Violentmonkey editor, **select all existing text** (`Ctrl + A`) and **paste** to replace it.
 4. Save with **`Ctrl + S`** (`Cmd + S` on macOS).
+5. The script appears in the dashboard with a green toggle — make sure it's **on**.
 
-> The script header starts with `// ==UserScript==` — it must remain intact; it declares the `@match` and `@connect` directives.
+> The script header starts with `// ==UserScript==`. It must remain intact — it declares the `@match` and `@connect` directives that Violentmonkey uses for page injection and API permissions.
 
 ### Step 4 — Verify Installation
 
-Open **Dashboard → Installed Userscripts** and confirm **LMS Auto-Solver (Vortex Auto-Pilot)** is listed and toggled **on**.
+Open **Violentmonkey Dashboard → Installed** (or the popup) and confirm **LMS Auto-Solver (Vortex Auto-Pilot)** is listed with its toggle enabled.
+
+### Step 5 — Grant Network Permission
+
+Because the script calls `https://generativelanguage.googleapis.com`, Violentmonkey may show a permission prompt the first time it runs:
+
+- Click **“Allow”** on the Violentmonkey confirmation panel that appears at the top of the page.
+
+This is expected — the permission comes from the `@connect generativelanguage.googleapis.com` directive in the script header.
 
 ---
 
@@ -130,4 +144,4 @@ The key is stored in `localStorage` under `vortex_api_key` and reused across ses
 ### Option B — Edit the Default Key (Not Recommended)
 
 ```js
-const DEFAULT_API_KEY = "AQ.Ab8RN6K0C0U4QkJGc0iz6vl_VGwTplBHMeoNCvvG8_H4wKZb2A";
+const DEFAULT_API_KEY = "past_your_api";
