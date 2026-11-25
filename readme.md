@@ -132,7 +132,7 @@ A valid Gemini key is required unless you're using the embedded default (not rec
 ### Option A — Configure via Panel (Recommended)
 
 1. Navigate to any page.
-2. Press **`Alt + X`** to open the panel.
+2. Press **`Alt + SHIFT+ H`** to open the panel.
 3. Click the **Settings** icon in the top-right.
 4. Paste your API key into the **Gemini API Key** field.
 5. Click **Test Connection** — expect **"API is working"**.
@@ -145,3 +145,7 @@ The key is stored in `localStorage` under `vortex_api_key` and reused across ses
 
 ```js
 const DEFAULT_API_KEY = "past_your_api";
+
+```
+## IF U LIKE MY PROJECT GIVE A STAR AND FORK THE REPO 
+```
